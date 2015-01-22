@@ -13,8 +13,10 @@ public class TheStack {
 	
 	private final int DEFAULT_VALUE = -1;
 	
+	// constructor
 	public TheStack()
 	{
+		// initialize array with default values
 		array = new int[20];
 		for(int i = 0; i < array.length; i++)
 		{
@@ -24,11 +26,13 @@ public class TheStack {
 		top = 0;
 	}
 	
+	// push non-negative number into stack 
+	// return true if push successfully, otherwise return false
 	public boolean push(int value)
 	{
-		if (!isFull())
+		if (!isFull())  // the stack still has space
 		{
-			if ( value >= 0 )
+			if ( value >= 0 )  // only push non-negative number
 			{
 				array[top] = value;
 				top++;
@@ -39,9 +43,11 @@ public class TheStack {
 		return false;
 	}
 	
+	// pop the top number from stack
+	// if stack is empty, return -9999
 	public int pop()
 	{
-		if (isEmpty())
+		if (isEmpty())  
 		{
 			return -9999;
 		}
@@ -54,6 +60,8 @@ public class TheStack {
 		}
 	}
 	
+	// check if the stack is empty
+	// return true if it is empty, otherwise return false
 	public boolean isEmpty()
 	{
 		for(int i = 0; i < array.length; i++)
@@ -67,8 +75,18 @@ public class TheStack {
 		return true;
 	}
 	
+	// check if the stack is full
+	// return true if it is full, otherwise return false
 	public boolean isFull()
 	{
-		return top == array.length;
+		for(int i = 0; i < array.length; i++)
+		{
+			if ( array[i] == DEFAULT_VALUE)
+			{
+				return false;
+			}
+		}
+		
+		return true;
 	}
 }

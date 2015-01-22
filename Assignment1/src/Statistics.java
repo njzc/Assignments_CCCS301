@@ -1,3 +1,6 @@
+import java.text.DecimalFormat;
+import java.util.Scanner;
+
 /*
 	1.Name: Cong Zhang 
 	2.ID number: 260573307
@@ -8,34 +11,57 @@
 
 public class Statistics {
 
-	private static double series[] = new double[]{1,2,3,4,2,3,1,3,19,8};
+	private static double series[] = new double[10];
 	
 	private static final double NO_REPEAT = -9999;
 	
 	public static void main(String args[])
 	{
+
+		Scanner input = new Scanner(System.in);
+		int count = 0;
+		
+		// decimal display pattern
+		DecimalFormat df = new DecimalFormat();
+		df.applyPattern("#.#####");
+		
+		// read 10 numbers into series
+		while ( count < 10 )
+		{
+			System.out.print("Please enter No." + ( count + 1) + " number, which should be a real number: ");
+			double number = input.nextDouble();
+			
+			series[count] = number;
+			count++;
+			System.out.println("Store " + df.format(number) + " in the series successfully.");
+		}
+		input.close();
+		
+		// display series
+		System.out.println();
+		System.out.print("Series: ");
+		for(int i = 0; i < series.length; i++)
+		{
+			System.out.print(df.format(series[i]) + " ");
+		}
+		System.out.println();
+		
+		// do the calculation
 		double theAverage = average();
 		double theGreatest = greatest();
 		boolean monotonic = isMonotonic();
 		double theMostFrequent = mostFrequent();
 		
-		//display series
-		for(int i = 0; i < series.length; i++)
-		{
-			System.out.print(series[i] + " ");
-		}
-		System.out.println();
+		// display theAverage value
+		System.out.println("Average: " + df.format(theAverage));
 		
-		//display theAverage value
-		System.out.println("Average: " + theAverage);
+		// display theGreatest value
+		System.out.println("Greatest: " + df.format(theGreatest));
 		
-		//display theGreatest value
-		System.out.println("Greatest: " + theGreatest);
-		
-		//display isMonotonic value
+		// display isMonotonic value
 		System.out.println("Monotonic: " + (monotonic ? "yes" : "no" ));
 		
-		//display theMostFrequent value
+		// display theMostFrequent value
 		System.out.print("Most Frequent: ");
 		if (theMostFrequent == NO_REPEAT)
 		{
@@ -43,12 +69,12 @@ public class Statistics {
 		}
 		else
 		{
-			System.out.println(theMostFrequent);
+			System.out.println(df.format(theMostFrequent));
 		}
 
 	}
 	
-	//get the average of the numbers in the series
+	// get the average of the numbers in the series
 	static double average()
 	{
 		double sum = 0;
@@ -61,7 +87,7 @@ public class Statistics {
 		return sum / series.length;
 	}
 	
-	//get the greatest number in the series
+	// get the greatest number in the series
 	static double greatest()
 	{
 		double max = series[0];
@@ -77,10 +103,10 @@ public class Statistics {
 		return max;
 	}
 	
-	//determine if the array is monotonic
+	// check if the array is monotonic
 	static boolean isMonotonic()
 	{
-		//determine if the array progressively increases 
+		// check if the array progressively increases 
 		boolean increaseResult = true;		
 		for(int i = 0; i< series.length - 1; i++)
 		{
@@ -92,7 +118,7 @@ public class Statistics {
 		
 		if ( !increaseResult)
 		{
-			//determine if the array progressively decreases 
+			// check if the array progressively decreases 
 			boolean decreaseResult = true;
 			for(int i = 0; i< series.length - 1; i++)
 			{
@@ -137,7 +163,7 @@ public class Statistics {
 			}
 		}
 				
-		//only return the number which repeats at least 2 times 
+		// only return the number which repeats at least 2 times 
 		if (mostRepeatTimes >= 2)
 		{
 			return mostFrequentNumber;
