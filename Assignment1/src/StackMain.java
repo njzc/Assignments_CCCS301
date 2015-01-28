@@ -6,7 +6,6 @@
 	5.Where you developed your program: Eclipse
 */
 
-import java.text.DecimalFormat;
 import java.util.Scanner;
 
 public class StackMain {
@@ -24,8 +23,7 @@ public class StackMain {
 			System.out.print("Please enter No." + ( validCount + 1) + " number, which should be a non-negative integer: ");
 			int number = input.nextInt();
 			
-			boolean pushResult = aStack.push(number);
-			if ( pushResult == true )
+			if ( aStack.push(number) == true )
 			{
 				validCount++;
 				System.out.println("Push " + number + " successfully.");

@@ -18,9 +18,9 @@ public class TheStack {
 	{
 		// initialize array with default values
 		array = new int[20];
-		for(int i = 0; i < array.length; i++)
+		for(int item:array)
 		{
-			array[i] = DEFAULT_VALUE;
+			item = DEFAULT_VALUE;
 		}
 		
 		top = 0;
@@ -64,9 +64,9 @@ public class TheStack {
 	// return true if it is empty, otherwise return false
 	public boolean isEmpty()
 	{
-		for(int i = 0; i < array.length; i++)
+		for(int item:array)
 		{
-			if ( array[i] != DEFAULT_VALUE)
+			if ( item != DEFAULT_VALUE)
 			{
 				return false;
 			}
@@ -79,9 +79,9 @@ public class TheStack {
 	// return true if it is full, otherwise return false
 	public boolean isFull()
 	{
-		for(int i = 0; i < array.length; i++)
+		for(int item:array)
 		{
-			if ( array[i] == DEFAULT_VALUE)
+			if ( item == DEFAULT_VALUE)
 			{
 				return false;
 			}

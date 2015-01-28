@@ -1,6 +1,3 @@
-import java.text.DecimalFormat;
-import java.util.Scanner;
-
 /*
 	1.Name: Cong Zhang 
 	2.ID number: 260573307
@@ -8,6 +5,10 @@ import java.util.Scanner;
 	4.Assignment number: 1 
 	5.Where you developed your program: Eclipse
 */
+
+import java.text.DecimalFormat;
+import java.util.Scanner;
+
 
 public class Statistics {
 
@@ -110,9 +111,10 @@ public class Statistics {
 		boolean increaseResult = true;		
 		for(int i = 0; i< series.length - 1; i++)
 		{
-			if (series[i] > series[i + 1])
+			if (series[i] >= series[i + 1])
 			{
 				increaseResult = false;
+				break;
 			}
 		}
 		
@@ -122,9 +124,10 @@ public class Statistics {
 			boolean decreaseResult = true;
 			for(int i = 0; i< series.length - 1; i++)
 			{
-				if (series[i] < series[i + 1])
+				if (series[i] <= series[i + 1])
 				{
 					decreaseResult = false;
+					break;
 				}
 			}
 			return decreaseResult;
