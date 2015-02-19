@@ -140,7 +140,7 @@ public class Statistics {
 	}
 	
 	//get most frequent number in the series
-	private static double mostFrequent()
+	static double mostFrequent()
 	{
 		double repeatNumber = series[0];
 		double mostFrequentNumber = series[0];
