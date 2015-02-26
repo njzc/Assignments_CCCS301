@@ -5,7 +5,7 @@ public class Tester1 {
 
 	public static void main(String[] args) {
 		
-		final int SIZE = 2;
+		final int SIZE = 20;
 		final String DONE = "DONE";
 		
 		ContainerVer1 container = new ContainerVer1(SIZE);
