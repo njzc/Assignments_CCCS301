@@ -1,5 +1,3 @@
-import java.util.Scanner;
-
 /*
 	1.Name: Cong Zhang 
 	2.ID number: 260573307
@@ -7,6 +5,8 @@ import java.util.Scanner;
 	4.Assignment number: 3 
 	5.Where you developed your program: Eclipse
 */
+
+import java.util.Scanner;
 
 public class Program {
 
