@@ -6,7 +6,7 @@
 	5.Where you developed your program: Eclipse
 */
 
-public class BankAccount implements Transactions{
+public class BankAccount implements Transactions, CompareObjects{
 
 	private String accountNumber;
 	private double balance;
@@ -25,7 +25,8 @@ public class BankAccount implements Transactions{
 		}
 	}
 	
-	public void	withdrawal (double amount)
+	// this method name should be a verb not a noun "withdrawal"
+	public void	withdraw (double amount)
 	{
 		if ( amount > 0 )
 		{
@@ -37,9 +38,27 @@ public class BankAccount implements Transactions{
 		}
 	}
 	
+	
 	public double getBalance()
 	{
 		return balance;
 	}
 	
+	
+	public Object clone()
+	{
+		return new BankAccount(this.accountNumber, this.balance);
+	}
+	
+	
+	public boolean equals(Object o)
+	{
+		BankAccount another = (BankAccount)o;
+		if (another != null )
+		{
+			return (this.accountNumber == another.accountNumber && this.balance == another.balance);
+		}
+		
+		return false;
+	}
 }

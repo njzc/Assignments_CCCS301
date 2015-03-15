@@ -7,6 +7,7 @@
 */
 
 public interface CompareObjects {
-	public void duplicate(int index); 
+	//public void duplicate(int index); 
+	public Object clone();
 	public boolean equals(Object o);
 }

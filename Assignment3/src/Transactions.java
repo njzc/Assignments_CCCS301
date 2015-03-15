@@ -8,7 +8,10 @@
 
 public interface Transactions {
 	public void deposit (double amount); 
-	public void	withdrawal (double amount); 
+	
+	// this method name should be a verb not a noun "withdrawal"
+	public void	withdraw (double amount); 
+	
 	public double getBalance(); 
 
 	public static final double overdraftFee = 5.00;

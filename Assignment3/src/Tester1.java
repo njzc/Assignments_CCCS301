@@ -77,8 +77,10 @@ public class Tester1 {
 			// Ask the user for a String and then display what the find() and isMember() methods return.
 			System.out.print("Please enter a string: ");
 			String searchString = input.nextLine();
+			
 			int findResult = container.find(searchString);
 			System.out.println("The find() method returns: " + findResult);
+			
 			boolean isMemberResult = container.isMember(searchString);
 			System.out.println("The isMember() method returns: " + isMemberResult);
 			System.out.println();
@@ -86,7 +88,7 @@ public class Tester1 {
 			// Ask the user if he wants to test it again
 			System.out.println("Would you like to test the container again? (Yes or No): ");
 			testAgain = input.nextLine();
-			while (! ( testAgain.equalsIgnoreCase("Yes") || testAgain.equalsIgnoreCase("Yes") || testAgain.equalsIgnoreCase("Y") || testAgain.equalsIgnoreCase("No") || testAgain.equalsIgnoreCase("N")))
+			while (! ( testAgain.equalsIgnoreCase("Yes") || testAgain.equalsIgnoreCase("Y") || testAgain.equalsIgnoreCase("No") || testAgain.equalsIgnoreCase("N")))
 			{
 				System.out.println("Please input a valid string (Yes or No): ");
 				testAgain = input.nextLine();

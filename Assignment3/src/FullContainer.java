@@ -6,7 +6,7 @@
 	5.Where you developed your program: Eclipse
 */
 
-class FullContainer extends ContainerVer1 implements CompareObjects
+class FullContainer extends ContainerVer1
 {
 	//private Object array[];
 	
@@ -14,11 +14,18 @@ class FullContainer extends ContainerVer1 implements CompareObjects
 	{
 		super(size);
 	}
+	
+	// make sure every object added into the container implements CompareObjects
+	public boolean add(CompareObjects item)
+	{
+		return super.add(item);
+	}
 
 	public void duplicate(int index)
 	{
-		add(get(index));
+		super.add(((CompareObjects)super.get(index)).clone());
 	}
+	
 	
 	public boolean equals(Object o)
 	{
