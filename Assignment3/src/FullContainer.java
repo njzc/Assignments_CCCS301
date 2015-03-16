@@ -8,7 +8,6 @@
 
 class FullContainer extends ContainerVer1
 {
-	//private Object array[];
 	
 	FullContainer(int size) 
 	{

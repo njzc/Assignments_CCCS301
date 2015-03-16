@@ -99,8 +99,15 @@ public class Tester2 {
 					{
 						System.out.println("Please input the amount you want to withdraw:");
 						double withdrawAmount = input.nextDouble();
-						withdrawAccount.withdraw(withdrawAmount);
-						System.out.println("Withdraw successfully");
+						if ( withdrawAmount > 0 )
+						{
+							withdrawAccount.withdraw(withdrawAmount);
+							System.out.println("Withdraw successfully");
+						}
+						else
+						{
+							System.out.println("The amount you want to withdraw should be greater than 0.");
+						}
 					}
 					else
 					{
