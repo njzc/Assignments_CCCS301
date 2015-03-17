@@ -13,7 +13,7 @@ public class Tester2 {
 
 	public static void main(String[] args) {
 		
-		final int SIZE = 10;
+		final int SIZE = 20;
 		
 		FullContainer container = new FullContainer(SIZE);
 
