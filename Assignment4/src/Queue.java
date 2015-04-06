@@ -15,6 +15,24 @@ public class Queue<E> {
 		array = new Object[10];
 	}
 	
+	//TODO: TBD
+	public Queue(int size)
+	{
+		array = new Object[size];
+	}
+	
+	//TODO: TBD
+	@Override
+	public Queue<E> clone()
+	{
+		Queue clonedQueue = new Queue(array.length);
+		for (int i = 0; i < array.length; i++)
+		{
+			clonedQueue.enqueue(array[i]);
+		}
+		return clonedQueue;
+	}
+	
 	public boolean enqueue(E anObject)
 	{
 		if ( anObject != null )
