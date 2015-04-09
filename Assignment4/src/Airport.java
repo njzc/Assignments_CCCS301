@@ -17,19 +17,11 @@ public class Airport {
 	
 	Queue<Airplane> airplanes;
 	Passenger passenger;
-	JDialog registerDialog;
+	JDialog jdlRegister;
+	JDialog jdlSearchPassenger;
 	
 	JFrame frame;
-	JPanel panelItinerary = new JPanel(new GridLayout(1, 4));
 	
-	//JTextField jtfPassengerName = new JTextField();
-	JTextField jtfItineraryItem = new JTextField();
-	
-	final JPanel panel = new JPanel(new GridLayout(1, 4));
-	
-
-	JButton jbtEnterItineraryItem = new JButton("Ok");
-	JButton jbtCancelEnterItineraryItem = new JButton("Cancel");
 	
 	public Airport(int numOfPlanes)
 	{
@@ -45,7 +37,7 @@ public class Airport {
 	public void menu()
 	{
 		frame = new JFrame("Airport");
-		//frame.pack();
+
 		frame.setSize(600, 500);
 		frame.setVisible(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -53,7 +45,8 @@ public class Airport {
 		frame.setLocationRelativeTo(null);
 		
 
-		registerDialog = new JDialog(frame, Dialog.ModalityType.DOCUMENT_MODAL);
+		jdlRegister = new JDialog(frame, Dialog.ModalityType.DOCUMENT_MODAL);
+		jdlSearchPassenger = new JDialog(frame, Dialog.ModalityType.DOCUMENT_MODAL);
 		 
 		JButton jbtRegister = new JButton("Register a passenger");
 		jbtRegister.addActionListener(new ActionListener() {
@@ -64,6 +57,14 @@ public class Airport {
 		});
 		
 		JButton jbtItinerary = new JButton("Manage Passenger Itinerary");
+		jbtItinerary.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				manageItinerary();
+			}
+
+		});
+		
 		JButton jbtDispatch = new JButton("Dispatch airplane");
 		jbtDispatch.addActionListener(new ActionListener() {
 
@@ -84,21 +85,54 @@ public class Airport {
 	private void registerPassenger()
 	{
 		
-		registerDialog.setLayout(new FlowLayout(FlowLayout.LEFT,10,10));
-		registerDialog.setTitle("Register a Passenger");
-		registerDialog.setSize(500, 300);
+		jdlRegister.setLayout(new FlowLayout(FlowLayout.LEFT,10,10));
+		jdlRegister.setTitle("Register a Passenger");
+		jdlRegister.setSize(500, 300);
 		
-		registerDialog.add(new EnterPassengerPanel(), BorderLayout.CENTER);
+		//remove panel before adding
+		Component components[] = jdlRegister.getContentPane().getComponents();
+		for (int i = 0; i < components.length; i++)
+		{
+			if (components[i].getClass() == NewPassengerPanel.class 
+					|| components[i].getClass() == EnterItineraryPanel.class 
+					|| components[i].getClass() == SetAirplaneSeatPanel.class 
+					)
+			{
+				jdlRegister.remove(components[i]);				
+			}
+		}
+		jdlRegister.add(new NewPassengerPanel(), BorderLayout.CENTER);
 		
-		registerDialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE); 
-		registerDialog.setLocationRelativeTo(null);
-		registerDialog.setVisible(true); 
+		jdlRegister.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE); 
+		jdlRegister.setLocationRelativeTo(null);
+		jdlRegister.setVisible(true); 
+	}
+	
+
+	private void manageItinerary() {
+		
+		jdlSearchPassenger.setTitle("");
+		jdlSearchPassenger.setSize(500,120);
+		
+		//remove panel before adding
+		Component components[] = jdlSearchPassenger.getContentPane().getComponents();
+		for (int i = 0; i < components.length; i++)
+		{
+			if (components[i].getClass() == SearchPassengerPanel.class)
+			{
+				jdlSearchPassenger.remove(components[i]);				
+			}
+		}
+		
+		jdlSearchPassenger.add(new SearchPassengerPanel(), BorderLayout.CENTER);
+		jdlSearchPassenger.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE); 
+		jdlSearchPassenger.setLocationRelativeTo(null);
+		jdlSearchPassenger.setVisible(true);
 	}
 	
 	private void dispatchAirplane()
 	{
 		Airplane airplane = airplanes.dequeue();
-		String title = "Dispatch Airplane";
 		String message = "";
 		if ( airplane != null )
 		{
@@ -108,13 +142,13 @@ public class Airport {
 		{
 			message = "No airplanes in the airport";
 		}
-		JOptionPane.showMessageDialog(null, message, title, JOptionPane.INFORMATION_MESSAGE);
+		showAlert(message);
 	}
 	
 
-	private class EnterPassengerPanel extends JPanel
+	private class NewPassengerPanel extends JPanel
 	{
-		public EnterPassengerPanel()
+		public NewPassengerPanel()
 		{
 			this.add(new JLabel("Enter Passenger Name: "));
 			final JTextField jtfPassengerName = new JTextField(16);
@@ -129,15 +163,14 @@ public class Airport {
 					String passengerName = jtfPassengerName.getText();
 					if ( !passengerName.isEmpty() )
 					{				
-						//disable pnName elements
 						jtfPassengerName.setEnabled(false);
 						jbtEnterPassengerName.setEnabled(false);						
 						passenger = new Passenger(passengerName);
 
-						registerDialog.add(new EnterItineraryPanel(), BorderLayout.SOUTH);
-						registerDialog.add(new SetAirplaneSeatPanel(), BorderLayout.SOUTH);
-						registerDialog.revalidate();
-						registerDialog.repaint();
+						jdlRegister.add(new EnterItineraryPanel(), BorderLayout.SOUTH);
+						jdlRegister.add(new SetAirplaneSeatPanel(), BorderLayout.SOUTH);
+						jdlRegister.revalidate();
+						jdlRegister.repaint();
 					}
 					else
 					{
@@ -219,7 +252,7 @@ public class Airport {
 						Airplane airplane = getValidAirplane(airplaneID);
 						if ( airplane != null)
 						{
-							airplane.setSeat(seatRow, seatColumn);
+							airplane.setSeat(passenger, seatRow, seatColumn);
 							//check if this seat is valid
 							if ( airplane.getSeat(seatRow, seatColumn))
 							{
@@ -252,12 +285,72 @@ public class Airport {
 			this.setVisible(true);
 		}
 		
-		public void setEnable(boolean enabled)
-		{
-			jbtSet.setEnabled(enabled);
-		}
 	}
 	    
+
+	private class SearchPassengerPanel extends JPanel
+	{
+		public SearchPassengerPanel()
+		{
+			
+			this.add(new JLabel("Enter Passenger Name: "));
+			final JTextField jtfPassengerName = new JTextField(16);
+			this.add(jtfPassengerName);
+			
+			this.add(new JLabel("Airplane ID: "));
+			final JTextField jtfAirplaneID = new JTextField(4);
+			this.add(jtfAirplaneID);
+			
+			final JButton jbtSearchPassenger = new JButton("Search");
+			jbtSearchPassenger.addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent arg0) {
+					
+					try
+					{
+						int airplaneID = Integer.valueOf(jtfAirplaneID.getText());
+						String passengerName = jtfPassengerName.getText();
+						
+						if ( !passengerName.isEmpty() )
+						{				
+							Airplane airplane = getValidAirplane(airplaneID);
+							if ( airplane != null )
+							{
+								passenger = airplane.getPassenger(passengerName);
+
+								if ( passenger != null ) 
+								{
+									jdlSearchPassenger.setVisible(false);
+								}
+								else
+								{
+									showAlert("There is no passenger whose name is " + passengerName + " in airplane " + airplaneID + ", please re-enter");
+								}
+							}
+							else
+							{
+								showAlert("Airplane doesn't exist, please re-enter");
+							}
+						}
+						else
+						{
+							showAlert("Passenger name cannot be empty, please re-enter");
+						}
+					}
+					catch (NumberFormatException ex)
+					{
+						showAlert("Please input integer number for Airplane ID");
+					}
+					
+				}
+			});
+			this.add(jbtSearchPassenger);
+
+			this.setBorder(BorderFactory.createTitledBorder("Passenger Infomation"));
+			this.setVisible(true);
+		}
+	}
 	
 	
 	private Airplane getValidAirplane(int airplaneID)
@@ -281,8 +374,4 @@ public class Airport {
 		JOptionPane.showMessageDialog(null, message, null, JOptionPane.INFORMATION_MESSAGE);
 	}
 	
-	private void addItineraryActivity(String activity)
-	{
-
-	}
 }

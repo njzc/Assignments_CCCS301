@@ -1,3 +1,5 @@
+import javax.swing.text.PasswordView;
+
 /*
 	1.Name: Cong Zhang 
 	2.ID number: 260573307
@@ -26,6 +28,7 @@ public class Airplane {
 			}
 		}
 		
+		passengers = new Queue<Passenger>();
 	}
 	
 	public boolean getSeat(int seatRow, int seatColumn)
@@ -39,12 +42,13 @@ public class Airplane {
 		return false;
 	}
 	
-	public void setSeat(int seatRow, int seatColumn)
+	public void setSeat(Passenger passenger, int seatRow, int seatColumn)
 	{
 		if ( seatRow >= 0 && seatRow < seats.length 
 		&& seatColumn >= 0 && seatColumn < seats[0].length )
 		{
 			seats[seatRow][seatColumn] = true;
+			passengers.enqueue(passenger);
 		}
 	}
 	
@@ -53,9 +57,23 @@ public class Airplane {
 		return planeID;
 	}
 	
-	//TODO: TBD
-	public Passenger getPassenger()
+	public Passenger getPassenger(String passengerName)
 	{
-		return passengers.dequeue();
+		Passenger passenger = passengers.dequeue();
+		
+		while ( passenger != null )
+		{
+			if ( passenger.getName().equals(passengerName))
+			{
+				break;
+			}
+			
+		}
+		//re-add passenger to queue
+		if ( passenger != null )
+		{
+			passengers.insert(passenger, 0);
+		}
+		return passenger;
 	}
 }

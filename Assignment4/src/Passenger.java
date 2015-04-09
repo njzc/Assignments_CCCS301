@@ -20,6 +20,10 @@ public class Passenger {
 		this.itinerary = new Itinerary(this.name + "'s Itinerary");
 	}
 
+	public String getName()
+	{
+		return name;
+	}
 	
 	public void setSeatRow(int seatRow)
 	{
