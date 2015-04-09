@@ -19,6 +19,12 @@ public class Passenger {
 		this.name = nameOfPassenger;
 		this.itinerary = new Itinerary(this.name + "'s Itinerary");
 	}
+
+	
+	public void setSeatRow(int seatRow)
+	{
+		this.seatRow = seatRow;
+	}
 	
 	public int getSeatRow()
 	{
@@ -48,10 +54,5 @@ public class Passenger {
 	public Itinerary getItinerary()
 	{
 		return itinerary;
-	}
-	
-	public void setSeatRow(int seatRow)
-	{
-		this.seatRow = seatRow;
 	}
 }

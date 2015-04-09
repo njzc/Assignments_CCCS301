@@ -50,6 +50,7 @@ public class Itinerary {
 		{
 			result += index + ": " + iteneraryItem + ", ";
 			iteneraryItem = tempItinerary.dequeue();
+			index++;
 		}
 		
 		//remove last ", "
