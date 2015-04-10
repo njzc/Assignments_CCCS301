@@ -79,7 +79,8 @@ public class Airport {
 		frame.add(jbtRegister);
 		frame.add(jbtItinerary);
 		frame.add(jbtDispatch);
-		
+		frame.revalidate();
+		frame.repaint();
 	}
 	
 	private void registerPassenger()
@@ -322,6 +323,9 @@ public class Airport {
 								if ( passenger != null ) 
 								{
 									jdlSearchPassenger.setVisible(false);
+									frame.add(new ManageItineraryPanel(), BorderLayout.SOUTH);
+									frame.revalidate();
+									frame.repaint();
 								}
 								else
 								{
@@ -352,6 +356,66 @@ public class Airport {
 		}
 	}
 	
+	private class ManageItineraryPanel extends JPanel
+	{
+		public ManageItineraryPanel()
+		{
+			JButton jbtDisplayItinerary = new JButton("Display itinerary");
+			jbtDisplayItinerary.addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+			});
+			this.add(jbtDisplayItinerary);
+			
+			JButton jbtAddItem = new JButton("Add itinerary item");
+			jbtAddItem.addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+			});
+			this.add(jbtAddItem);
+						
+			JButton jbtDeleteItem = new JButton("Delete an itinerary item");
+			jbtDeleteItem.addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+			});
+			this.add(jbtDeleteItem);
+						
+			JButton jbtMoveItem = new JButton("Move an itinerary item");
+			jbtMoveItem.addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+			});
+			this.add(jbtMoveItem);	
+			
+			JButton jbtQuit = new JButton("Quit");
+			jbtQuit.addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+			});
+			this.add(jbtQuit);
+		}
+	}
 	
 	private Airplane getValidAirplane(int airplaneID)
 	{

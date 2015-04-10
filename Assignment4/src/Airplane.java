@@ -59,21 +59,18 @@ public class Airplane {
 	
 	public Passenger getPassenger(String passengerName)
 	{
-		Passenger passenger = passengers.dequeue();
+		Queue<Passenger> tempQueue = passengers.clone();
+		Passenger passenger = tempQueue.dequeue();
 		
 		while ( passenger != null )
 		{
 			if ( passenger.getName().equals(passengerName))
 			{
-				break;
+				return passenger;
 			}
-			
+			passenger = tempQueue.dequeue();
 		}
-		//re-add passenger to queue
-		if ( passenger != null )
-		{
-			passengers.insert(passenger, 0);
-		}
-		return passenger;
+		
+		return null;
 	}
 }
