@@ -78,7 +78,10 @@ public class Queue<E> {
 			boolean result = true;			
 			for (int i = 0; i < temp.length; i++)
 			{
-				result = result & enqueue((E)temp[i]);
+				if ( temp[i] != null )
+				{
+					result = result & enqueue((E)temp[i]);
+				}
 			}
 			return result;
 		}
@@ -137,17 +140,4 @@ public class Queue<E> {
 		return true;
 	}
 	
-	//TODO： to be deleted
-	public String toString()
-	{
-		String result = "";
-		for (int i = 0; i < array.length; i++)
-		{
-			if ( array[i] != null )
-			{
-				result += array[i].toString() + ",";
-			}
-		}
-		return result;
-	}
 }

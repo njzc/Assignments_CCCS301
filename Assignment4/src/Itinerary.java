@@ -39,25 +39,28 @@ public class Itinerary {
 		return theItinerary.insert(item, index);
 	}
 	
+	public boolean move(int fromIndex, int toIndex)
+	{
+		String item = theItinerary.delete(fromIndex);
+		return insert(item, toIndex);
+	}
+	
+	//return html string so it can be wrapped
 	public String toString()
 	{
-		String result = title + ": ";
+		String result = "<html>" + title + ":<br />";
 		
 		Queue<String> tempItinerary = theItinerary.clone();
 		String iteneraryItem = tempItinerary.dequeue();
 		int index = 1;
 		while ( iteneraryItem != null )
 		{
-			result += index + ": " + iteneraryItem + ", ";
+			result += index + ": " + iteneraryItem + " <br />";
 			iteneraryItem = tempItinerary.dequeue();
 			index++;
 		}
 		
-		//remove last ", "
-		if ( result.endsWith(", "))
-		{
-			result = result.substring(0, result.length() - 2);
-		}
+		result += "</html>";
 		
 		return result;
 	}

@@ -20,34 +20,49 @@ public class Airport {
 	JDialog jdlRegister;
 	JDialog jdlSearchPassenger;
 	
-	JFrame frame;
+	AddItineraryDialog dlgAddItinerary;
+	DeleteItineraryDialog dlgDelItinerary;
+	MoveItineraryDialog dlgMoveItinerary;
 	
+	JFrame frmMain;
+	ManageItineraryPanel pnManageItinerary;
+	ListItineraryPanel pnListItinerary;
 	
 	public Airport(int numOfPlanes)
 	{
 		airplanes = new Queue<Airplane>(numOfPlanes);
 		
-		//initialize airplanes with default size 50;
+		//initialize airplanes with size 50;
 		for (int i = 0; i < numOfPlanes; i++ )
 		{
 			airplanes.enqueue(new Airplane(i + 1, 50));
 		}
+		
+//		//TODO: to be deleted
+//		passenger = new Passenger("aa");
+//		passenger.setPlaneID(1);
+//		passenger.setSeatRow(1);
+//		passenger.setSeatColumn(1);
+//		airplanes.clone().delete(0).setSeat(passenger, 1, 1);
+		
 	}
 	
 	public void menu()
 	{
-		frame = new JFrame("Airport");
+		frmMain = new JFrame("Airport");
 
-		frame.setSize(600, 500);
-		frame.setVisible(true);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setLayout(new FlowLayout(FlowLayout.LEFT,10,10));
-		frame.setLocationRelativeTo(null);
+		frmMain.setSize(560, 500);
+		frmMain.setVisible(true);
+		frmMain.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmMain.setLayout(new FlowLayout(FlowLayout.LEFT,10,10));
+		frmMain.setLocationRelativeTo(null);
 		
 
-		jdlRegister = new JDialog(frame, Dialog.ModalityType.DOCUMENT_MODAL);
-		jdlSearchPassenger = new JDialog(frame, Dialog.ModalityType.DOCUMENT_MODAL);
-		 
+		jdlRegister = new JDialog(frmMain, Dialog.ModalityType.DOCUMENT_MODAL);
+		jdlRegister.setResizable(false);
+		jdlSearchPassenger = new JDialog(frmMain, Dialog.ModalityType.DOCUMENT_MODAL);
+		jdlSearchPassenger.setResizable(false);
+		
 		JButton jbtRegister = new JButton("Register a passenger");
 		jbtRegister.addActionListener(new ActionListener() {
 			@Override
@@ -76,11 +91,11 @@ public class Airport {
 			
 		});
 		
-		frame.add(jbtRegister);
-		frame.add(jbtItinerary);
-		frame.add(jbtDispatch);
-		frame.revalidate();
-		frame.repaint();
+		frmMain.add(jbtRegister);
+		frmMain.add(jbtItinerary);
+		frmMain.add(jbtDispatch);
+		frmMain.revalidate();
+		frmMain.repaint();
 	}
 	
 	private void registerPassenger()
@@ -112,7 +127,7 @@ public class Airport {
 
 	private void manageItinerary() {
 		
-		jdlSearchPassenger.setTitle("");
+		jdlSearchPassenger.setTitle("Manage Passenger Itinerary");
 		jdlSearchPassenger.setSize(500,120);
 		
 		//remove panel before adding
@@ -206,6 +221,7 @@ public class Airport {
 						{
 							passenger.getItinerary().add(itineraryActivity);
 							showAlert("Add itinerary activity successfully");
+							jtfItineraryItem.setText("");
 						}
 					}
 					else
@@ -323,9 +339,13 @@ public class Airport {
 								if ( passenger != null ) 
 								{
 									jdlSearchPassenger.setVisible(false);
-									frame.add(new ManageItineraryPanel(), BorderLayout.SOUTH);
-									frame.revalidate();
-									frame.repaint();
+									pnManageItinerary = new ManageItineraryPanel();
+									//jpnManageItinerary.setLayout(new BorderLayout());
+									frmMain.add(pnManageItinerary, BorderLayout.SOUTH);
+									frmMain.setSize(720,500);
+									
+									frmMain.revalidate();
+									frmMain.repaint();
 								}
 								else
 								{
@@ -360,13 +380,27 @@ public class Airport {
 	{
 		public ManageItineraryPanel()
 		{
+			this.setSize(700,300);
 			JButton jbtDisplayItinerary = new JButton("Display itinerary");
 			jbtDisplayItinerary.addActionListener(new ActionListener() {
 				
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					// TODO Auto-generated method stub
+					pnListItinerary = new ListItineraryPanel(passenger.getItinerary());
 					
+					//remove panel before adding
+					Component components[] = frmMain.getContentPane().getComponents();
+					for (int i = 0; i < components.length; i++)
+					{
+						if (components[i].getClass() == ListItineraryPanel.class )
+						{
+							frmMain.remove(components[i]);				
+						}
+					}
+					
+					frmMain.add(pnListItinerary, BorderLayout.SOUTH);
+					frmMain.revalidate();
+					frmMain.repaint();
 				}
 			});
 			this.add(jbtDisplayItinerary);
@@ -376,7 +410,8 @@ public class Airport {
 				
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					// TODO Auto-generated method stub
+					dlgAddItinerary = new AddItineraryDialog(frmMain, Dialog.ModalityType.DOCUMENT_MODAL);
+					dlgAddItinerary.setVisible(true);
 					
 				}
 			});
@@ -387,8 +422,8 @@ public class Airport {
 				
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					// TODO Auto-generated method stub
-					
+					dlgDelItinerary = new DeleteItineraryDialog(frmMain, Dialog.ModalityType.DOCUMENT_MODAL);
+					dlgDelItinerary.setVisible(true);					
 				}
 			});
 			this.add(jbtDeleteItem);
@@ -398,7 +433,8 @@ public class Airport {
 				
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					// TODO Auto-generated method stub
+					dlgMoveItinerary = new MoveItineraryDialog(frmMain, Dialog.ModalityType.DOCUMENT_MODAL);
+					dlgMoveItinerary.setVisible(true);	
 					
 				}
 			});
@@ -409,11 +445,150 @@ public class Airport {
 				
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					// TODO Auto-generated method stub
-					
+					pnManageItinerary.setVisible(false);		
 				}
 			});
 			this.add(jbtQuit);
+		}
+	}
+	
+	private class AddItineraryDialog extends JDialog
+	{
+		public AddItineraryDialog(Window window, ModalityType type)
+		{
+			super(window, type);
+			this.setLayout(new FlowLayout(FlowLayout.LEFT,10,10));
+			this.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE); 
+			this.setTitle("Add Itinerary Item");
+			this.setSize(500, 100);
+			this.setResizable(false);
+			this.setLocationRelativeTo(null);
+
+			this.add(new JLabel("Enter itinerary item: "));
+			final JTextField jtfItineraryItem = new JTextField(25);
+			this.add(jtfItineraryItem);
+			
+			JButton jbtAddItem = new JButton("Add");
+			jbtAddItem.addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent arg0) {
+					String item = jtfItineraryItem.getText();
+					if ( !item.isEmpty() )
+					{
+						passenger.getItinerary().add(item);
+						showAlert("Add itinerary successfully");
+						jtfItineraryItem.setText("");
+					}
+					else
+					{
+						showAlert("Itinerary item cannot be empty");
+					}
+				}
+			});
+			this.add(jbtAddItem);
+		}
+	}
+	
+	private class DeleteItineraryDialog extends JDialog
+	{
+		public DeleteItineraryDialog(Window window, ModalityType type)
+		{
+			super(window, type);
+			this.setLayout(new FlowLayout(FlowLayout.LEFT,10,10));
+			this.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE); 
+			this.setTitle("Delete Itinerary Item");
+			this.setSize(300, 100);
+			this.setResizable(false);
+			this.setLocationRelativeTo(null);
+			
+			this.add(new JLabel("Enter itinerary index: "));
+			final JTextField jtfItineraryIndex = new JTextField(4);
+			this.add(jtfItineraryIndex);
+			
+			JButton jbtDelItem = new JButton("Delete");
+			jbtDelItem.addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent arg0) {
+					String index = jtfItineraryIndex.getText();
+					if ( isInteger(index) )
+					{
+						if ( passenger.getItinerary().delete(Integer.valueOf(index) - 1))
+						{
+							showAlert("Delete itinerary successfully");
+							jtfItineraryIndex.setText("");
+						}
+						else
+						{
+							showAlert("Index " + index + " doesn't exist, please re-enter");
+						}
+					}
+					else
+					{
+						showAlert("Itinerary index must be an integer");
+					}
+				}
+			});
+			this.add(jbtDelItem);
+		}
+	}
+	
+	private class MoveItineraryDialog extends JDialog
+	{
+		public MoveItineraryDialog(Window window, ModalityType type)
+		{
+			super(window, type);
+			this.setLayout(new FlowLayout(FlowLayout.LEFT,10,10));
+			this.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE); 
+			this.setTitle("Delete Itinerary Item");
+			this.setSize(500, 100);
+			this.setResizable(false);
+			this.setLocationRelativeTo(null);
+			
+			this.add(new JLabel("Move itinerary from index: "));
+			final JTextField jtfItineraryFromIndex = new JTextField(4);
+			this.add(jtfItineraryFromIndex);
+			
+			this.add(new JLabel("to index: "));
+			final JTextField jtfItineraryToIndex = new JTextField(4);
+			this.add(jtfItineraryToIndex);
+			
+			JButton jbtDelItem = new JButton("Move");
+			jbtDelItem.addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent arg0) {
+					String fromIndex = jtfItineraryFromIndex.getText();
+					String toIndex = jtfItineraryToIndex.getText();
+					if ( isInteger(fromIndex) && isInteger(toIndex) )
+					{
+						if ( passenger.getItinerary().move(Integer.valueOf(fromIndex) - 1, Integer.valueOf(toIndex) - 1))
+						{
+							showAlert("Move itinerary successfully");
+							jtfItineraryFromIndex.setText("");
+							jtfItineraryToIndex.setText("");
+						}
+						else
+						{
+							showAlert("Index " + fromIndex + " doesn't exist, please re-enter");
+						}
+					}
+					else
+					{
+						showAlert("Itinerary index must be an integer");
+					}
+				}
+			});
+			this.add(jbtDelItem);
+		}
+	}
+	
+	private class ListItineraryPanel extends JPanel
+	{
+		public ListItineraryPanel(Itinerary itinerary)
+		{
+			this.add(new JLabel(itinerary.toString()));
 		}
 	}
 	
@@ -438,4 +613,17 @@ public class Airport {
 		JOptionPane.showMessageDialog(null, message, null, JOptionPane.INFORMATION_MESSAGE);
 	}
 	
+	private boolean isInteger(String input)
+	{
+		try
+		{
+			Integer.valueOf(input);
+			return true;
+		}
+		catch (NumberFormatException ex)
+		{
+			return false;
+		}
+		
+	}
 }
