@@ -42,6 +42,7 @@ public class Airplane {
 		return false;
 	}
 	
+	//TODO: TBD
 	public void setSeat(Passenger passenger, int seatRow, int seatColumn)
 	{
 		if ( seatRow >= 0 && seatRow < seats.length 
@@ -57,6 +58,7 @@ public class Airplane {
 		return planeID;
 	}
 	
+	//TODO: TBD
 	public Passenger getPassenger(String passengerName)
 	{
 		Queue<Passenger> tempQueue = passengers.clone();

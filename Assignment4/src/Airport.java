@@ -269,19 +269,26 @@ public class Airport {
 						Airplane airplane = getValidAirplane(airplaneID);
 						if ( airplane != null)
 						{
-							airplane.setSeat(passenger, seatRow, seatColumn);
-							//check if this seat is valid
-							if ( airplane.getSeat(seatRow, seatColumn))
+							if ( !airplane.getSeat(seatRow, seatColumn) )
 							{
-								passenger.setPlaneID(airplaneID);
-								passenger.setSeatRow(seatRow);
-								passenger.setSeatColumn(seatColumn);
-								showAlert("Set airplane and seat successfully");
-								jbtSet.setEnabled(false);
+								airplane.setSeat(passenger, seatRow, seatColumn);
+								//check if this seat is valid
+								if ( airplane.getSeat(seatRow, seatColumn))
+								{
+									passenger.setPlaneID(airplaneID);
+									passenger.setSeatRow(seatRow);
+									passenger.setSeatColumn(seatColumn);
+									showAlert("Set airplane and seat successfully");
+									jbtSet.setEnabled(false);
+								}
+								else
+								{
+									showAlert("Seat is not available, please re-enter");
+								}
 							}
 							else
 							{
-								showAlert("Seat is not available, please re-enter");
+								showAlert("Seat is already taken, please re-enter");
 							}
 						}
 						else
@@ -445,7 +452,12 @@ public class Airport {
 				
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					pnManageItinerary.setVisible(false);		
+					pnManageItinerary.setVisible(false);
+					if ( pnListItinerary != null )
+					{
+						pnListItinerary.setVisible(false);
+					}
+					frmMain.setSize(560,500);
 				}
 			});
 			this.add(jbtQuit);

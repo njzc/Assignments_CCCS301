@@ -13,24 +13,13 @@ public class Program {
 
 	public static void main(String[] args) {
 	
-//		Scanner scanner = new Scanner(System.in);
-//		System.out.print("Please input the number of airplanes belonging to the airport: ");
-//		int numOfAirplanes = scanner.nextInt();
-//		scanner.close();
+		Scanner scanner = new Scanner(System.in);
+		System.out.print("Please input the number of airplanes: ");
+		int numOfAirplanes = scanner.nextInt();
+		scanner.close();
 		
-		Airport airport = new Airport(5);
+		Airport airport = new Airport(numOfAirplanes);
 		airport.menu();
-		
-//		Queue<Integer> queue = new Queue<Integer>();
-//		for (int i = 0; i < 14; i++)
-//		{
-//			queue.enqueue(i);
-//		}
-//		queue.insert(100,2);
-//		System.out.println(queue);
-//		System.out.println(queue.delete(11));
-//		System.out.println(queue);
-//		
 		
 	}
 
