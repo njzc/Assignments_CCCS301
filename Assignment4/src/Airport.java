@@ -37,21 +37,14 @@ public class Airport {
 		{
 			airplanes.enqueue(new Airplane(i + 1, 50));
 		}
-		
-//		//TODO: to be deleted
-//		passenger = new Passenger("aa");
-//		passenger.setPlaneID(1);
-//		passenger.setSeatRow(1);
-//		passenger.setSeatColumn(1);
-//		airplanes.clone().delete(0).setSeat(passenger, 1, 1);
-		
+				
 	}
 	
 	public void menu()
 	{
 		frmMain = new JFrame("Airport");
 
-		frmMain.setSize(560, 500);
+		frmMain.setSize(580, 500);
 		frmMain.setVisible(true);
 		frmMain.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmMain.setLayout(new FlowLayout(FlowLayout.LEFT,10,10));
@@ -103,7 +96,7 @@ public class Airport {
 		
 		jdlRegister.setLayout(new FlowLayout(FlowLayout.LEFT,10,10));
 		jdlRegister.setTitle("Register a Passenger");
-		jdlRegister.setSize(500, 300);
+		jdlRegister.setSize(520, 300);
 		
 		//remove panel before adding
 		Component components[] = jdlRegister.getContentPane().getComponents();
@@ -243,15 +236,15 @@ public class Airport {
 		public SetAirplaneSeatPanel()
 		{
 			this.add(new JLabel("Airplane ID: "));
-			final JTextField jtfAirplaneID = new JTextField(4);
+			final JTextField jtfAirplaneID = new JTextField(3);
 			this.add(jtfAirplaneID);
 
 			this.add(new JLabel("Seat Row: "));
-			final JTextField jtfSeatRow = new JTextField(4);
+			final JTextField jtfSeatRow = new JTextField(3);
 			this.add(jtfSeatRow);
 			
 			this.add(new JLabel("Seat Column: "));
-			final JTextField jtfSeatColumn = new JTextField(4);
+			final JTextField jtfSeatColumn = new JTextField(3);
 			this.add(jtfSeatColumn);
 						
 			jbtSet.addActionListener(new ActionListener() {
@@ -318,7 +311,7 @@ public class Airport {
 		{
 			
 			this.add(new JLabel("Enter Passenger Name: "));
-			final JTextField jtfPassengerName = new JTextField(16);
+			final JTextField jtfPassengerName = new JTextField(12);
 			this.add(jtfPassengerName);
 			
 			this.add(new JLabel("Airplane ID: "));
@@ -457,7 +450,7 @@ public class Airport {
 					{
 						pnListItinerary.setVisible(false);
 					}
-					frmMain.setSize(560,500);
+					frmMain.setSize(580,500);
 				}
 			});
 			this.add(jbtQuit);
@@ -477,7 +470,7 @@ public class Airport {
 			this.setLocationRelativeTo(null);
 
 			this.add(new JLabel("Enter itinerary item: "));
-			final JTextField jtfItineraryItem = new JTextField(25);
+			final JTextField jtfItineraryItem = new JTextField(20);
 			this.add(jtfItineraryItem);
 			
 			JButton jbtAddItem = new JButton("Add");
@@ -510,7 +503,7 @@ public class Airport {
 			this.setLayout(new FlowLayout(FlowLayout.LEFT,10,10));
 			this.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE); 
 			this.setTitle("Delete Itinerary Item");
-			this.setSize(300, 100);
+			this.setSize(320, 100);
 			this.setResizable(false);
 			this.setLocationRelativeTo(null);
 			
