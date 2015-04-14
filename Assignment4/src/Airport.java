@@ -10,13 +10,14 @@ import java.awt.*;
 import java.awt.event.*;
 
 import javax.swing.*;
-import javax.swing.border.*;
 import javax.swing.JOptionPane;
 
 public class Airport {
 	
 	Queue<Airplane> airplanes;
 	Passenger passenger;
+	Queue<Passenger> passengers;
+	
 	JDialog jdlRegister;
 	JDialog jdlSearchPassenger;
 	
@@ -31,6 +32,7 @@ public class Airport {
 	public Airport(int numOfPlanes)
 	{
 		airplanes = new Queue<Airplane>(numOfPlanes);
+		passengers = new Queue<Passenger>();
 		
 		//initialize airplanes with size 50;
 		for (int i = 0; i < numOfPlanes; i++ )
@@ -38,6 +40,7 @@ public class Airport {
 			airplanes.enqueue(new Airplane(i + 1, 50));
 		}
 				
+		
 	}
 	
 	public void menu()
@@ -145,6 +148,26 @@ public class Airport {
 		String message = "";
 		if ( airplane != null )
 		{
+			//remove all passengers in that airplane from queue
+			Queue<Passenger> tempQueue = new Queue<Passenger>();
+			Passenger passenger = passengers.dequeue();
+			while ( passenger != null )
+			{
+				if ( passenger.getPlaneID() != airplane.getID())
+				{
+					tempQueue.enqueue(passenger);
+				}
+				passenger = passengers.dequeue();
+			}
+			
+			//re-add passengers in other airplanes into passengers queue
+			Passenger tempPassenger = tempQueue.dequeue();
+			while ( tempPassenger != null )
+			{
+				passengers.enqueue(tempPassenger);
+				tempPassenger = tempQueue.dequeue();
+			}
+			
 			message = "Dispatch airplane " + airplane.getID() + " successfully";
 		}
 		else
@@ -264,13 +287,16 @@ public class Airport {
 						{
 							if ( !airplane.getSeat(seatRow, seatColumn) )
 							{
-								airplane.setSeat(passenger, seatRow, seatColumn);
+								airplane.setSeat(seatRow, seatColumn);
 								//check if this seat is valid
 								if ( airplane.getSeat(seatRow, seatColumn))
 								{
 									passenger.setPlaneID(airplaneID);
 									passenger.setSeatRow(seatRow);
 									passenger.setSeatColumn(seatColumn);
+									
+									passengers.enqueue(passenger);
+									
 									showAlert("Set airplane and seat successfully");
 									jbtSet.setEnabled(false);
 								}
@@ -332,17 +358,17 @@ public class Airport {
 						if ( !passengerName.isEmpty() )
 						{				
 							Airplane airplane = getValidAirplane(airplaneID);
+							
 							if ( airplane != null )
 							{
-								passenger = airplane.getPassenger(passengerName);
+								passenger = searchPassenger(airplaneID, passengerName);
 
 								if ( passenger != null ) 
 								{
 									jdlSearchPassenger.setVisible(false);
 									pnManageItinerary = new ManageItineraryPanel();
-									//jpnManageItinerary.setLayout(new BorderLayout());
 									frmMain.add(pnManageItinerary, BorderLayout.SOUTH);
-									frmMain.setSize(720,500);
+									frmMain.setSize(820,500);
 									
 									frmMain.revalidate();
 									frmMain.repaint();
@@ -609,6 +635,21 @@ public class Airport {
 				return airplane;
 			}
 			airplane = tempQueue.dequeue();
+		}
+		return null;
+	}
+	
+	private Passenger searchPassenger(int airplaneID, String passengerName)
+	{
+		Queue<Passenger> tempQueue = passengers.clone();
+		Passenger passenger = tempQueue.dequeue();
+		while ( passenger != null )
+		{
+			if ( passenger.getName().equals(passengerName) && passenger.getPlaneID() == airplaneID)
+			{
+				return passenger;
+			}
+			passenger = tempQueue.dequeue();
 		}
 		return null;
 	}

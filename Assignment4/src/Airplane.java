@@ -1,5 +1,3 @@
-import javax.swing.text.PasswordView;
-
 /*
 	1.Name: Cong Zhang 
 	2.ID number: 260573307
@@ -7,6 +5,7 @@ import javax.swing.text.PasswordView;
 	4.Assignment number: 4 
 	5.Where you developed your program: Eclipse
 */
+
 
 public class Airplane {
 	
@@ -40,16 +39,16 @@ public class Airplane {
 		}
 		
 		return false;
+		
 	}
 	
-	//TODO: TBD
-	public void setSeat(Passenger passenger, int seatRow, int seatColumn)
+
+	public void setSeat(int seatRow, int seatColumn)
 	{
 		if ( seatRow >= 0 && seatRow < seats.length 
 		&& seatColumn >= 0 && seatColumn < seats[0].length )
 		{
 			seats[seatRow][seatColumn] = true;
-			passengers.enqueue(passenger);
 		}
 	}
 	
@@ -58,21 +57,9 @@ public class Airplane {
 		return planeID;
 	}
 	
-	//TODO: TBD
-	public Passenger getPassenger(String passengerName)
+	public Passenger getPassenger()
 	{
-		Queue<Passenger> tempQueue = passengers.clone();
-		Passenger passenger = tempQueue.dequeue();
-		
-		while ( passenger != null )
-		{
-			if ( passenger.getName().equals(passengerName))
-			{
-				return passenger;
-			}
-			passenger = tempQueue.dequeue();
-		}
-		
-		return null;
+		return passengers.dequeue();
 	}
+	
 }

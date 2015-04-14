@@ -1,8 +1,3 @@
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.util.Scanner;
-
 /*
 	1.Name: Cong Zhang 
 	2.ID number: 260573307
@@ -10,6 +5,11 @@ import java.util.Scanner;
 	4.Assignment number: 4 
 	5.Where you developed your program: Eclipse
 */
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.Scanner;
 
 public class FileStatistics {
 
