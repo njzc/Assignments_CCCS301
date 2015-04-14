@@ -39,8 +39,7 @@ public class Airport {
 		{
 			airplanes.enqueue(new Airplane(i + 1, 50));
 		}
-				
-		
+
 	}
 	
 	public void menu()
