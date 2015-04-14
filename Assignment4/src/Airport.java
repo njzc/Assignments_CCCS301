@@ -10,7 +10,6 @@ import java.awt.*;
 import java.awt.event.*;
 
 import javax.swing.*;
-import javax.swing.JOptionPane;
 
 public class Airport {
 	
@@ -49,10 +48,9 @@ public class Airport {
 		frmMain.setSize(580, 500);
 		frmMain.setVisible(true);
 		frmMain.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frmMain.setLayout(new FlowLayout(FlowLayout.LEFT,10,10));
+		frmMain.setLayout(new FlowLayout(10,10,10));
 		frmMain.setLocationRelativeTo(null);
 		
-
 		jdlRegister = new JDialog(frmMain, Dialog.ModalityType.DOCUMENT_MODAL);
 		jdlRegister.setResizable(false);
 		jdlSearchPassenger = new JDialog(frmMain, Dialog.ModalityType.DOCUMENT_MODAL);
@@ -86,9 +84,13 @@ public class Airport {
 			
 		});
 		
-		frmMain.add(jbtRegister);
-		frmMain.add(jbtItinerary);
-		frmMain.add(jbtDispatch);
+
+		JPanel jpnMain = new JPanel();
+		jpnMain.add(jbtRegister);
+		jpnMain.add(jbtItinerary);
+		jpnMain.add(jbtDispatch);
+		
+		frmMain.add(jpnMain, BorderLayout.CENTER);
 		frmMain.revalidate();
 		frmMain.repaint();
 	}
@@ -366,7 +368,7 @@ public class Airport {
 								{
 									jdlSearchPassenger.setVisible(false);
 									pnManageItinerary = new ManageItineraryPanel();
-									frmMain.add(pnManageItinerary, BorderLayout.SOUTH);
+									frmMain.add(pnManageItinerary, BorderLayout.CENTER);
 									frmMain.setSize(820,500);
 									
 									frmMain.revalidate();
@@ -423,7 +425,7 @@ public class Airport {
 						}
 					}
 					
-					frmMain.add(pnListItinerary, BorderLayout.SOUTH);
+					frmMain.add(pnListItinerary, BorderLayout.CENTER);
 					frmMain.revalidate();
 					frmMain.repaint();
 				}
@@ -479,6 +481,7 @@ public class Airport {
 				}
 			});
 			this.add(jbtQuit);
+			this.add(Box.createHorizontalStrut(100));
 		}
 	}
 	
